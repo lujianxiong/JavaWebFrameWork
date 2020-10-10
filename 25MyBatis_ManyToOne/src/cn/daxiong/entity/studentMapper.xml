@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--  namespace 命名空间(就让它为Mapper映射文件的文件名，去掉.xml) -->
+<mapper namespace="cn.daxiong.entity.studentMapper">
+	<!-- 多对一的处理有两种方式：
+		 1、按结果嵌套处理
+		 2、按查询嵌套处理
+	 -->
+	 <!-- 1、按结果嵌套处理 
+	<select id="getStudents" resultMap="StudentTeacher">
+		select s.id sid,s.name sname,s.tid stid,t.id tid,t.name tname from student s,teacher t where s.tid=t.id
+	</select>
+	<resultMap type="Student" id="StudentTeacher">
+		<id column="sid" property="id" />
+		<result column="sname" property="name" />
+		     关联对象 
+			  property：关联对象在Student实体类中的属性
+			  javaType:property属性的类型 
+		<association property="teacher" javaType="Teacher">
+			<id column="tid" property="id" />
+			<result column="tname" property="name" />
+		</association>
+	</resultMap>-->
+	
+	<!-- 2、按查询嵌套处理 -->
+	<select id="getStudents" resultMap="StudentTeacher">
+		select * from student
+	</select>
+	<resultMap type="Student" id="StudentTeacher">
+		<!-- association关联属性  property属性名，javaType属性的类型， column关联属性在多的一方表的列名，select会拿着tid去查询数据库 -->
+		<association property="teacher" column="tid" javaType="Teacher" select="cn.daxiong.entity.teacherMapper.getTeacher"/>
+	</resultMap>
+	
+	
+</mapper>

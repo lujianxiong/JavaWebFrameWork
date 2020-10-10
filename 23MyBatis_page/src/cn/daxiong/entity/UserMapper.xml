@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <!-- namespace 命名空间（防止sql语句的id重名）
+ 	  namespace的命名一般对应实体类的全包名（用的人对应dao层的接口）
+ 	  parameterType 指sql语句的参数类型
+ 	  resultType 指返回结果类型
+ 	  useGeneratedKeys="true" 使用自增主键
+  -->
+<mapper namespace="cn.daxiong.entity.UserMapper">
+
+	<!-- 查询单个用户(id该文件中唯一)-->
+ 	<select id="selectUser" resultType="User">
+		select * from user where id = #{id}
+	</select>
+
+	
+	<!-- 添加用户 -->
+	<insert id="addUser" parameterType="User" useGeneratedKeys="true">
+		insert into user(username,password) values(#{username},#{password})	
+	</insert>
+	
+	<!-- 修改用户 -->
+	<update id="updateUser" parameterType="User">
+		update user set username=#{username},password=#{password} where id=#{id}
+	</update>
+	
+	<!-- 删除用户 -->
+	<delete id="deleteUser">
+		delete from user where id=#{id}
+	</delete>
+	
+	<!-- 查询所有用户 -->
+	<select id="selectAll" parameterType="Map" resultType="User">
+		select * from user limit #{startIndex},#{pageSize}
+	</select>
+	
+	<!-- RowBounds实现分页 -->
+	<select id="getAll"  resultType="User">
+		select * from user
+	</select>
+	
+	
+</mapper>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	 xmlns:aop="http://www.springframework.org/schema/aop"
+	 xsi:schemaLocation="http://www.springframework.org/schema/beans
+	 http://www.springframework.org/schema/beans/spring-beans.xsd
+	 http://www.springframework.org/schema/aop
+	 http://www.springframework.org/schema/aop/spring-aop.xsd">
+	 
+	 <bean id="userService" class="cn.daxiong.service.impl.UserServiceImpl"/>
+	 <bean id="log" class="cn.daxiong.log.Log"/>
+	 <bean id="afterLog" class="cn.daxiong.log.AfterLog"/>
+	 
+	 <aop:config>
+	 	<!-- execution(* cn.daxiong.service.UserServiceImpl.add()) -->
+	 	<!-- 这第一个*号表示匹配所有返回值 -->
+	 	<!-- 上面的这个只是给对add方法配置了，要想是UserServiceImpl类下的所有方法都配置，就将add替换成* ：execution(* cn.daxiong.service.UserServiceImpl.*())-->
+	 	<!-- ()表示只对无参的方法匹配，我们使用(..)表示匹配所有参数：execution(* cn.daxiong.service.UserServiceImpl.*(..)) -->
+	 	<aop:pointcut expression="execution(* cn.daxiong.service.impl.*.*())" id="pointcut"/>
+	 	<aop:advisor advice-ref="log" pointcut-ref="pointcut"/>
+	 	<aop:advisor advice-ref="afterLog" pointcut-ref="pointcut"/>
+	 </aop:config>
+</beans>

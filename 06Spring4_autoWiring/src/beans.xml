@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd"
+        default-autowire="byName">
+
+	<!-- bean就是java对象，由Spring容器来创建和管理 -->
+	<bean id="MyuserDao" class="cn.daxiong.dao.impl.UserDaoOracleImpl"/>
+	
+	<!-- antoWire自动装配，简化Spring的篇配置
+		no不使用自动装配
+		byName：根据名称（是set方法名来的，而不是变量）去查找相应的bean，如果有则装配上去。
+		byType：根据类型进行自动装配，不用管bean的id，但同一种类型的bean只能有一个（建议慎用byType）
+		constructor：当使用构造器注入，实例化bean时，使用byType的方式装配构造方法。
+	 -->
+	<bean id ="service" class="cn.daxiong.service.impl.UserServiceImpl" autowire="constructor">
+	</bean>
+
+</beans>

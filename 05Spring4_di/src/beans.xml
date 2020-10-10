@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	 xmlns:p="http://www.springframework.org/schema/p"
+	 xmlns:c="http://www.springframework.org/schema/c"
+	 xsi:schemaLocation="http://www.springframework.org/schema/beans
+	 http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<bean id="student" class="cn.daxiong.vo.Student">
+		<property name="name" value="宋妍霏"/>
+		<property name="addr" ref="addr"/>
+		<property name="books">
+			<array>
+				<value>金瓶梅</value>
+				<value>哪咤闹海</value>
+				<value>Java高级程序设计</value>
+			</array>
+		</property>
+		<property name="hobbies">
+			<list>
+				<value>看美女</value>
+				<value>玩阴阳师</value>
+				<value>卡拉OK</value>
+				<value>旅游</value>
+				<value>看电影儿</value>
+			</list>
+		</property>
+		<property name="cards">
+			<map>
+				<entry key="中国建设银行" value="124316543123423536"/>
+				<entry>
+					<key><value>招商银行</value></key>
+					<value>2143545386657634253</value>
+				</entry>
+			</map>
+		</property>
+		<property name="games">
+			<set>
+				<value>lol</value>
+				<value>dota</value>
+				<value>cs</value>
+				<value>dnf</value>
+			</set>
+		</property>
+		<property name="wife">
+			<null/>
+		</property>
+		<property name="info">
+			<props>
+				<prop key="学号">201703421</prop>
+				<prop key="sex">男</prop>
+				<prop key="name">Daxiong</prop>
+			</props>
+		</property>
+	</bean>
+	
+	<!-- bean的作用域   （默认是单例singleton）
+		singleton-单例：整个容器中只有一个对象实例 
+		prototype-原型： 每次获取bean的时候，都产生一个新的对象
+		request：每次请求时创建一个新的对象
+		session：在会话范围内，是一个对象实例。
+		global session：只在portlet下有用，表示是application
+		application：在应用的范围中只有一个对象。
+	-->
+	<bean id="addr" class="cn.daxiong.vo.Address" scope="prototype">
+		<property name="address" value="江苏省南京市"/>
+	</bean>
+	
+	<!-- p命名空间注入 属性依然要设置set方法 -->
+	<bean id="user" class="cn.daxiong.vo.User" p:name="风清扬" p:age="230"></bean>
+	
+	<!-- c命名空间注入要求有对应参数的构造方法 -->
+	<bean id="u1" class="cn.daxiong.vo.User" c:name="nico" c:age="16"></bean>
+	
+</beans>
